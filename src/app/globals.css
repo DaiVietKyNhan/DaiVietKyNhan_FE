@@ -30,7 +30,7 @@
 body {
   background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(50, 50, 50, 0.2)), url('../../public/background.png');
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-dfvn-graphit);
 }
 
 .line {
@@ -43,4 +43,22 @@ body {
   border: 1px solid var(--error);
   border-radius: 11px;
   margin-bottom: 0;
+}
+
+.animated-gradient {
+  background: linear-gradient(-45deg, #e0f2fe, #e0f7fa, #ede9fe, #fce7f3);
+  background-size: 400% 400%;
+  animation: gradient-animation 15s ease infinite;
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
