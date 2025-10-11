@@ -1,21 +1,20 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import { ToastContainer } from "react-toastify";
 import "./globals.css";
 import QueryProviderWrapper from "@components/providers/QueryProviderWrapper";
 import SocialMediaIcons from "@components/Atoms/SocialMediaIcons";
 import { Suspense } from "react";
-import VietnameseLoading from "@components/Molecules/Loading";
 import VietnameseHistoryLoading from "@components/Molecules/HistoryLoading";
+import localFont from 'next/font/local';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const StreetSignSans = localFont({
+  src: './fonts/StreetSignSans.otf',
+  variable: '--font-bd-street-sign',
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const DFVNGraphit = localFont({
+  src: './fonts/DFVNGraphitRegular.otf',
+  variable: '--font-dfvn-graphit',
 });
 
 export const metadata: Metadata = {
@@ -34,11 +33,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${StreetSignSans.variable} ${DFVNGraphit.variable} antialiased`}
       >
         <ToastContainer />
         <QueryProviderWrapper>
-          <Suspense fallback={<VietnameseHistoryLoading />}>{children}</Suspense>
+          <Suspense fallback={<VietnameseHistoryLoading />}>
+            {children}
+          </Suspense>
           <div className="fixed right-0 top-1/2 transform -translate-y-1/2 z-50 pointer-events-auto">
             <SocialMediaIcons />
           </div>
