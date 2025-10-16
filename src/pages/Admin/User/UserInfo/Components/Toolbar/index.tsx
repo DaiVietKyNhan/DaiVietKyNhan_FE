@@ -4,8 +4,24 @@ import { Button } from "@atoms/ui/button";
 import { Input } from "@atoms/ui/input";
 import LucideIcon from "@atoms/LucideIcon";
 import { COLORS } from "@constants/colors";
+import { useState, useEffect } from "react";
 
-const Toolbar = () => {
+interface ToolbarProps {
+  onSearch?: (search: string) => void;
+  color?: "default" | "black";
+}
+
+const Toolbar = ({ onSearch, color = "default" }: ToolbarProps) => {
+  const [searchValue, setSearchValue] = useState("");
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      onSearch?.(searchValue);
+    }, 300); // Debounce search
+
+    return () => clearTimeout(timeoutId);
+  }, [searchValue, onSearch]);
+
   return (
     <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
       <div className="flex-1 flex items-center gap-2">
@@ -18,10 +34,6 @@ const Toolbar = () => {
             color="black"
           />
         </div>
-        <Button variant="outline" size="sm" className="gap-2 border-gray-300">
-          <LucideIcon name="Filter" iconSize={16} />
-          Lọc
-        </Button>
       </div>
       <Button
         size="sm"

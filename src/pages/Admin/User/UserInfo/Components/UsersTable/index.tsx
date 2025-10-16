@@ -10,18 +10,80 @@ import {
   TableRow,
 } from "@atoms/ui/table";
 import { Button } from "@atoms/ui/button";
+import { Skeleton } from "@atoms/ui/skeleton";
 import LucideIcon from "@atoms/LucideIcon";
 import { COLORS } from "@constants/colors";
 import { IMePaginationResponse } from "@models/user/response";
 import { USER } from "@constants/user";
 import { formatDate } from "@utils/Date";
 
+export type SortField = 'name' | 'email' | 'coin' | 'point' | 'createdAt' | 'status';
+export type SortDirection = 'asc' | 'desc';
 
 interface Props {
   rows: NonNullable<IMePaginationResponse['data']>['results'] | undefined;
+  sortField?: SortField;
+  sortDirection?: SortDirection;
+  onSort?: (field: SortField) => void;
+  isLoading?: boolean;
+  skeletonRowCount?: number;
 }
 
-const UsersTable = ({ rows }: Props) => {
+const UsersTable = ({ rows, sortField, sortDirection, onSort, isLoading = false, skeletonRowCount = 5 }: Props) => {
+  /**
+   * Get Sort Icon
+   * @param field 
+   * @returns 
+   */
+  const handleSort = (field: SortField) => {
+    onSort?.(field);
+  };
+
+  const getSortIcon = (field: SortField) => {
+    if (sortField !== field) {
+      return <LucideIcon name="ArrowUpDown" iconSize={14} className="text-gray-400" />;
+    }
+    return sortDirection === 'asc'
+      ? <LucideIcon name="ArrowUp" iconSize={14} className="text-gray-600" />
+      : <LucideIcon name="ArrowDown" iconSize={14} className="text-gray-600" />;
+  };
+
+  /**
+   * Skeleton Row Component
+   */
+  const SkeletonRow = () => (
+    <TableRow>
+      <TableCell>
+        <div className="flex items-center gap-3">
+          <Skeleton className="h-8 w-8 rounded-full bg-gray-300/50" />
+          <Skeleton className="h-4 w-32 bg-gray-300/50" />
+        </div>
+      </TableCell>
+      <TableCell>
+        <Skeleton className="h-4 w-48 bg-gray-300/50" />
+      </TableCell>
+      <TableCell>
+        <Skeleton className="h-6 w-12 rounded-full bg-gray-300/50" />
+      </TableCell>
+      <TableCell>
+        <Skeleton className="h-6 w-12 rounded-full bg-gray-300/50" />
+      </TableCell>
+      <TableCell>
+        <Skeleton className="h-4 w-24 bg-gray-300/50" />
+      </TableCell>
+      <TableCell>
+        <Skeleton className="h-6 w-20 rounded-full bg-gray-300/50" />
+      </TableCell>
+      <TableCell className="text-right">
+        <div className="flex items-center justify-end gap-2">
+          <Skeleton className="h-8 w-8 rounded bg-gray-300/50" />
+          <Skeleton className="h-8 w-8 rounded bg-gray-300/50" />
+        </div>
+      </TableCell>
+    </TableRow>
+  );
+  //-----------------------------End-----------------------------//
+
   return (
     <div className="rounded-md">
       <Table>
@@ -66,9 +128,10 @@ const UsersTable = ({ rows }: Props) => {
                     <Badge variant="outline" className="bg-[#d16834] text-white border-0">
                       {USER.USER_STATUS.ACTIVE ? 'Hoạt động' : 'Không hoạt động'}
                     </Badge>
-                  ) : (
-                    <Badge variant="outline" className="bg-[#F26644] text-white border-0">
-                      {USER.USER_STATUS.INACTIVE ? 'Không hoạt động' : 'Hoạt động'}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <Badge variant="outline" className="bg-[#D86D38]/20 text-white border-0">
+                      {u.point}
                     </Badge>
                   )}
                 </TableCell>
