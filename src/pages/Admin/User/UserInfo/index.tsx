@@ -17,12 +17,8 @@ interface UserInfoPageProps {
 
 const UserInfoPage = ({ listUsers: initialListUsers, initialUsersResponse }: UserInfoPageProps) => {
 
-  /**
-   * Use Hooks
-   */
-  const [search, setSearch] = useState<string>("");
-  const [sortField, setSortField] = useState<SortField>('createdAt');
-  const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
+
+  const [itemsPerPage, setItemsPerPage] = useState<number>(15);
   const [page, setPage] = useState<number>(1);
   const [itemsPerPage, setItemsPerPage] = useState<number>(15);
 
