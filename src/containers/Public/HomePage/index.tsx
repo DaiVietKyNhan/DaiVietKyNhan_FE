@@ -808,7 +808,7 @@ const HomePageClient = ({
                     {/* Đối tác công nghệ */}
                     <div className="flex flex-col items-center justify-center">
                       <p className="text-base lg:text-xl text-white font-bold text-center mb-4">
-                        NHÀ TÀI CÔNG NGHỆ
+                        NHÀ TÀI TRỢ CÔNG NGHỆ
                       </p>
                       <div className="relative w-36 h-12 lg:w-60 lg:h-20 rounded-[10px] overflow-hidden shadow-lg">
                         <Image src="https://res.cloudinary.com/dauhpllo7/image/upload/v1763390330/b%E1%BB%99_logo_PARC_MALL.pdf_4_1_mcpbh7.png" alt="dimo" fill />
