@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { ROUTES } from "@routes";
 import { IFigure } from "@models/figure/entity";
 import figureService from "@services/figure";
+import userLandService from "@services/user-land";
 
 interface SelectCharacterPageProps {
   figures: IFigure[];
@@ -26,6 +27,7 @@ const SelectCharacterPage = React.memo(
       if (!selectedCharacter) return;
       try {
         await figureService.chooseFigure(selectedCharacter);
+        await userLandService.createUserLand();
       } finally {
         router.push(ROUTES.PUBLIC.MAP);
       }
